@@ -1,0 +1,6 @@
+fastapi[standard]
+sqlmodel
+bcrypt
+pyjwt
+alembic
+pymysql
