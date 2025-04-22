@@ -1,22 +1,14 @@
-from typing import Union
-from pydantic import BaseModel, EmailStr
-from fastapi import FastAPI
-from typing import Annotated
+from pydantic import EmailStr
 import bcrypt
-from fastapi import Depends, FastAPI, HTTPException, Query
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-from datetime import datetime, timedelta, timezone
-from typing import Annotated
-from sqlalchemy import UniqueConstraint, Column, String
-
-import jwt
-from fastapi import Depends, FastAPI, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jwt.exceptions import InvalidTokenError
-from pydantic import BaseModel
 from sqlmodel import Field, SQLModel
+from datetime import datetime
+from sqlalchemy import Column, String
+from typing import Optional
+from sqlalchemy import Column
 
 metadata = SQLModel.metadata
+
+
 # region SQLModel
 class User(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -35,3 +27,39 @@ class User(SQLModel, table=True):
         return bcrypt.checkpw(
             password.encode("utf-8"), self.hashed_password.encode("utf-8")
         )
+
+
+class Products(SQLModel, table=True):
+    id: int = Field(primary_key=True)
+    name: str
+    description: Optional[str] = None
+    sku: Optional[str] = None
+    detail: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
+
+
+class Attributes(SQLModel, table=True):
+    id: int = Field(primary_key=True)
+    name: str
+    value: str
+    product_id: int | None = Field(foreign_key="products.id")
+
+
+class Regions(SQLModel, table=True):
+    id: int = Field(primary_key=True)
+    name: str
+    code: str
+
+
+class RentalPeriods(SQLModel, table=True):
+    id: int = Field(primary_key=True)
+    month: int
+
+
+class ProductPricings(SQLModel, table=True):
+    id: int = Field(primary_key=True)
+    region_id: int = Field(foreign_key="regions.id")
+    rental_period_id: int = Field(foreign_key="rentalperiods.id")
+    product_id: int = Field(foreign_key="products.id")
+    price: int
