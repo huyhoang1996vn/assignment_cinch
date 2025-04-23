@@ -1,17 +1,14 @@
 from contextlib import asynccontextmanager
-from math import ceil
-from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException, Query, status
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from loguru import logger
-from sqlalchemy import func
-from sqlmodel import Session, create_engine, select
+from sqlmodel import Session, select
 
 from create_data import create_test_data
-from models import *
-from settings import engine
 from endpoints.api import api_router
+from models import Regions
+from settings import engine
+
 
 # region App
 @asynccontextmanager
