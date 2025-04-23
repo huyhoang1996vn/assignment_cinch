@@ -37,7 +37,7 @@ load_dotenv()
 def get_url():
     SQL_URL = os.getenv("SQL_URL")
     DB_NAME = os.getenv("DB_NAME")
-    return f"{SQL_URL}{DB_NAME}"
+    return f"{SQL_URL}/{DB_NAME}"
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.

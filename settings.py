@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
 settings = Settings()
 # region Config
-sql_url = f"{settings.SQL_URL}{settings.DB_NAME}"
+sql_url = f"{settings.SQL_URL}/{settings.DB_NAME}"
 engine = create_engine(sql_url, echo=True)
 
 
