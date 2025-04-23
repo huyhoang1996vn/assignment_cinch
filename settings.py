@@ -10,7 +10,7 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
-    TABLE_NAME: str = os.getenv("TABLE_NAME")
+    DB_NAME: str = os.getenv("DB_NAME")
     SQL_URL: str = os.getenv("SQL_URL")
 
     class Config:
@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
 settings = Settings()
 # region Config
-sql_url = f"{settings.SQL_URL}{settings.TABLE_NAME}"
+sql_url = f"{settings.SQL_URL}{settings.DB_NAME}"
 engine = create_engine(sql_url, echo=True)
 
 

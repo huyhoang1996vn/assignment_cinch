@@ -30,6 +30,14 @@ from models import *  # Import all your SQLModel models
 
 # This is the important part - point to your SQLModel metadata
 target_metadata = SQLModel.metadata
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+def get_url():
+    SQL_URL = os.getenv("SQL_URL")
+    DB_NAME = os.getenv("DB_NAME")
+    return f"{SQL_URL}{DB_NAME}"
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -62,11 +70,15 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    from sqlalchemy import create_engine
+    connectable = create_engine(get_url())
+    if connectable is None:
+        connectable = engine_from_config(
+            config.get_section(config.config_ini_section, {}),
+            prefix="sqlalchemy.",
+            poolclass=pool.NullPool,
+        )
+    
 
     with connectable.connect() as connection:
         context.configure(
