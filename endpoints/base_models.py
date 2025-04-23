@@ -26,16 +26,15 @@ class ProductResponse(BaseModel):
     pricing: List[PricingResponse]
 
 
-class PaginationMeta(BaseModel):
-    current_page: int
-    page_size: int
-    total_items: int
-    total_pages: int
-
-
 class PaginatedProductResponse(BaseModel):
     items: List[ProductResponse]
     current_page: int
     page_size: int
     total_items: int
     total_pages: int
+
+
+class ResgionResponse(BaseModel):
+    id: int
+    name: str
+    code: str

@@ -4,3 +4,7 @@ bcrypt
 pyjwt
 alembic
 pymysql
+pydantic-settings
+python-dotenv
+pytest
+httpx
