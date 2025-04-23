@@ -1,32 +1,8 @@
-from pydantic import EmailStr
-import bcrypt
 from sqlmodel import Field, SQLModel
 from datetime import datetime
-from sqlalchemy import Column, String
 from typing import Optional
-from sqlalchemy import Column
 
 metadata = SQLModel.metadata
-
-
-# region SQLModel
-class User(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    username: str = Field(sa_column=Column("username", String(100), unique=True))
-    email: EmailStr
-    hashed_password: str
-
-    def set_password(self, password: str):
-        """Hash the password and store it."""
-        self.hashed_password = bcrypt.hashpw(
-            password.encode("utf-8"), bcrypt.gensalt()
-        ).decode("utf-8")
-
-    def verify_password(self, password: str) -> bool:
-        """Verify the provided password against the stored hashed password."""
-        return bcrypt.checkpw(
-            password.encode("utf-8"), self.hashed_password.encode("utf-8")
-        )
 
 
 class Products(SQLModel, table=True):
