@@ -8,7 +8,7 @@ This project is a RESTful API service for managing rental products across differ
 - Framework: FastAPI
 - ORM: SQLModel (combines SQLAlchemy and Pydantic)
 - Database: MySQL (with migration support via Alembic)
-- Testing: Pytest with async support
+- Testing: Pytest
 
 
 
